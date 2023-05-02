@@ -11,7 +11,7 @@ library(readxl)
 library(writexl)
 
 # Set file paths
-excel_path <- "PEPRISC Val Data PRELIM.xlsx"
+excel_path <- "VerificationTemplate_Populated.xlsx" 
 excel_pred_path <- "predictionValues/answers_pred.xlsx"
 excel_pred_sub_path <- "predictionValues/answers_pred_sub.xlsx"
 
@@ -40,11 +40,6 @@ data <- read_excel(excel_path, .name_repair = "unique")
 print("Using prediction models to predict values...")
 pred_fit <- predict(fit, newdata = data, type = "prob")
 pred_fit_sub <- predict(fit_sub, newdata = data, type = "prob")
-# pred_train <- predict(train, newdata = data, type = "prob")
-# pred_train_impute <- predict(train_impute, newdata = data, type = "prob")
-# pred_var_names <- predict(var_names, newdata = data, type = "prob")
-# pred_line <- predict(lime_explainer, newdata = data, type = "response")
-
 
 # Append predictions to Excel sheet
 print("Writing predictions to Excel sheet...")
