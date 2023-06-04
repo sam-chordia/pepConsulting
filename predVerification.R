@@ -7,13 +7,19 @@
 
 
 # Load required packages for reading and writing from xlsx files
-library(readxl)
-library(writexl)
-library(caret)
-library(dplyr)
+
+library(pacman)
+p_load(
+  shiny, shinythemes, shinyWidgets, shinycssloaders, tidyverse, ggrepel,
+  janitor, caret, FNN, here, lime, readxl, writexl, caret, dplyr
+)
+
+fit <- readRDS("data/gbm_model.rds") # Model on full dataset
+fit_sub <- readRDS("data/gbm_model_trt.rds") # Model on trt subsets
+train <- readRDS("data/train_new.rds") # Training dataset (unnormalized)
 
 input_data <- "VerificationTemplate_Populated.xlsx"
-ouput_data <- "predictionValues/pep_prediciton_value.xlsx"
+output_data <- "predictionValues/pep_prediciton_value.xlsx"
 
 # Import data from the sheet provided
 message("Reading data from input sheet")
@@ -59,7 +65,6 @@ for (i in 1:nrow(data)) {
   pre_proc_values <- preProcess(train %>% select(-c("study_id", "pep", "patient_id")), method = c("center", "scale"))
   test_impute <- predict(pre_proc_values, input_dat)
   test_patients_pred_ls <- list()
-
   for (trt in c("Aggressive hydration only", "Indomethacin only", "PD stent only", "Aggressive hydration and indomethacin", "Indomethacin and PD stent")) {
     # Predict on no trt
     p1 <- predict(fit_sub[[trt]], newdata = test_impute %>% filter(therapy == "No treatment"), type = "prob")[, 2]
@@ -83,14 +88,16 @@ for (i in 1:nrow(data)) {
 
     # Compute adjusted prediction
     shrinkage <- ifelse(p1 > 0.1, 1, p1 * 10)
-    adj_factor <- p2 / p1 * shrinkage + 1 * (1 - shrinkage) 
-    adj_factor[is.nan(adj_factor)] <- 1 
+    adj_factor <- p2 / p1 * shrinkage + 1 * (1 - shrinkage)
+    adj_factor[is.nan(adj_factor)] <- 1
     test_patients_pred_ls[[trt]] <- tibble(
       MRN = input$MRN,
       therapy = trt,
       pred = pred * adj_factor
     )
   }
+
+  test_sub <- test_impute %>% filter(therapy == "No treatment")
   if (i == 1) {
     master_sheet <- tibble(
       MRN = input$MRN,
@@ -99,7 +106,7 @@ for (i in 1:nrow(data)) {
       pd_stent_only = test_patients_pred_ls[["PD stent only"]] %>% pull(pred),
       aggressive_hydration_and_indomethacin = test_patients_pred_ls[["Aggressive hydration and indomethacin"]] %>% pull(pred),
       indomethacin_and_pd_stent = test_patients_pred_ls[["Indomethacin and PD stent"]] %>% pull(pred),
-      no_treatment = pred
+      no_treatment = predict(fit, newdata = test_sub, type = "prob")[, 2]
     )
   } else {
     master_sheet <- rbind(master_sheet, tibble(
@@ -109,7 +116,7 @@ for (i in 1:nrow(data)) {
       pd_stent_only = test_patients_pred_ls[["PD stent only"]] %>% pull(pred),
       aggressive_hydration_and_indomethacin = test_patients_pred_ls[["Aggressive hydration and indomethacin"]] %>% pull(pred),
       indomethacin_and_pd_stent = test_patients_pred_ls[["Indomethacin and PD stent"]] %>% pull(pred),
-      no_treatment = pred
+      no_treatment = predict(fit, newdata = test_sub, type = "prob")[, 2]
     ))
   }
 }
