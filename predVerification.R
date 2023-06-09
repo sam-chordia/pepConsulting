@@ -1,6 +1,6 @@
 # predVerification.R
 # -----------------------------------------------------------------------------
-# Author:             Sambhav Chordia
+# Author:             Sambhav Chordia, Albert Kuo
 # Date last modified: June 2023
 #
 # R script to predict values for the PEPRISC data set using the GBM model
