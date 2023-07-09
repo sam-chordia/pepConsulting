@@ -18,8 +18,8 @@ fit <- readRDS("data/gbm_model.rds") # Model on full dataset
 fit_sub <- readRDS("data/gbm_model_trt.rds") # Model on trt subsets
 train <- readRDS("data/train_new.rds") # Training dataset (unnormalized)
 
-input_data <- "VerificationTemplate_Populated.xlsx"
-output_data <- "predictionValues/pep_prediciton_value.xlsx"
+input_data <- "Verification_FinalCohort(jun22jun23).xlsx"
+output_data <- "predictionValues/pep_prediciton_value2.xlsx"
 
 # Import data from the sheet provided
 message("Reading data from input sheet")
