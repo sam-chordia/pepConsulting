@@ -41,8 +41,8 @@ ui <- navbarPage("",
     # ----
 
     fluidRow(
-      column(3,
-        offset = 1,
+      column(4,
+        offset = 0,
         wellPanel(
           div(
             style = "display:inline-block",
@@ -927,10 +927,10 @@ server <- function(input, output, session) {
           aes(
             x = factor(therapy, levels = therapy_level_order),
             y = pred,
-            label = round(pred * 100, digits = 1),
+            label = paste0(round(pred * 100, digits = 1), "%"),
             vjust = -0.5
           ),
-          size = 4,
+          size = 6,
           color = "black"
         ) + 
         
@@ -954,8 +954,8 @@ server <- function(input, output, session) {
         theme(
           plot.title = element_text(hjust = 0.45),
           axis.text.x = element_text(size = 15),
-          legend.text = element_text(size = 15),
-          legend.position = "top"
+          legend.text = element_text(size = 1),
+          legend.position = "none"
         )
     )
   })
