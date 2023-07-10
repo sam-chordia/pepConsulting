@@ -1,0 +1,13 @@
+name: pepConsulting
+title: pepConsulting
+username:
+account: pepverif
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 9431867
+bundleId: 7437601
+url: https://pepverif.shinyapps.io/pepConsulting/
+when: 1688948334.78757
+lastSyncTime: 1688948334.7876
+asMultiple: FALSE
+asStatic: FALSE

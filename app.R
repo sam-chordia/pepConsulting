@@ -1,7 +1,7 @@
 # app.R
 # -----------------------------------------------------------------------------
-# Author:             Albert Kuo
-# Date last modified: Jan 18, 2021
+# Author:             Albert Kuo & Sambhav Chordia 
+# Date last modified: Jul 2023
 
 library(pacman)
 library(rsconnect)
