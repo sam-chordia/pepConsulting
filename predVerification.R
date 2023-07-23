@@ -96,7 +96,7 @@ for (i in 1:nrow(data)) {
       pred = pred * adj_factor
     )
   }
-
+  # Predict on no trt
   test_sub <- test_impute %>% filter(therapy == "No treatment")
   if (i == 1) {
     master_sheet <- tibble(

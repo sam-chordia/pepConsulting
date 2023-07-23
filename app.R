@@ -1,6 +1,6 @@
 # app.R
 # -----------------------------------------------------------------------------
-# Author:             Albert Kuo & Sambhav Chordia 
+# Author:             Sambhav Chordia
 # Date last modified: Jul 2023
 
 library(pacman)
@@ -15,7 +15,7 @@ p_load(
   shiny, shinythemes, shinyWidgets, shinycssloaders, tidyverse, ggrepel,
   janitor, caret, FNN, here, lime
 )
-#source(here("pep_risk_app/data/my_plot_lime_features.R"))
+# source(here("pep_risk_app/data/my_plot_lime_features.R"))
 
 # Define UI for application
 ui <- navbarPage("",
@@ -24,7 +24,7 @@ ui <- navbarPage("",
   # Choose a theme (optional)
   # theme = shinytheme("simplex"),
   # Application title
-  
+
   tags$head(
     tags$style(
       HTML("
@@ -34,7 +34,6 @@ ui <- navbarPage("",
       ")
     )
   ),
-  
   tabPanel(
     title = "Estimator", value = "Estimator",
 
@@ -54,7 +53,7 @@ ui <- navbarPage("",
             )
           ),
           br(),
-            div(
+          div(
             style = "display:inblock",
             numericInput(
               inputId = "age_years",
@@ -73,8 +72,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Acinarization"),
+            column(
+              7,
+              strong("Acinarization"),
             ),
             div(
               style = "display:inline-block",
@@ -87,8 +87,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Biliary sphincterotomy"),
+            column(
+              7,
+              strong("Biliary sphincterotomy"),
             ),
             div(
               style = "display:inline-block",
@@ -101,8 +102,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Cholecystectomy"),
+            column(
+              7,
+              strong("Cholecystectomy"),
             ),
             div(
               style = "display:inline-block",
@@ -113,12 +115,11 @@ ui <- navbarPage("",
               )
             ),
           ),
-          
           br(),
-          
           div(
-            column(7,
-                   strong("Difficult cannulation"),
+            column(
+              7,
+              strong("Difficult cannulation"),
             ),
             div(
               style = "display:inline-block",
@@ -131,8 +132,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Failed cannulation"),
+            column(
+              7,
+              strong("Failed cannulation"),
             ),
             div(
               style = "display:inline-block",
@@ -145,8 +147,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Guidewire cannulation"),
+            column(
+              7,
+              strong("Guidewire cannulation"),
             ),
             div(
               style = "display:inline-block",
@@ -159,8 +162,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Guidewire passage into pancreatic duct"),
+            column(
+              7,
+              strong("Guidewire passage into pancreatic duct"),
             ),
             div(
               style = "display:inline-block",
@@ -173,8 +177,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Guidewire passage into pancreatic duct > 2"),
+            column(
+              7,
+              strong("Guidewire passage into pancreatic duct > 2"),
             ),
             div(
               style = "display:inline-block",
@@ -187,36 +192,39 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                strong("History of PEP"),
+            column(
+              7,
+              strong("History of PEP"),
             ),
             div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "history_of_pep",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
+              style = "display:inline-block",
+              switchInput(
+                inputId = "history_of_pep",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
             ),
           ),
           br(),
           div(
-            column(7,
-                   strong("History of recurrent pancreatitis"),
+            column(
+              7,
+              strong("History of recurrent pancreatitis"),
             ),
             div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "hx_of_recurrent_pancreatitis",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
+              style = "display:inline-block",
+              switchInput(
+                inputId = "hx_of_recurrent_pancreatitis",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
             ),
           ),
           br(),
           div(
-            column(7,
-                   strong("Minor papilla sphincterotomy"),
+            column(
+              7,
+              strong("Minor papilla sphincterotomy"),
             ),
             div(
               style = "display:inline-block",
@@ -229,8 +237,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Pancreatic duct injection"),
+            column(
+              7,
+              strong("Pancreatic duct injection"),
             ),
             div(
               style = "display:inline-block",
@@ -243,8 +252,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Pancreatic duct injections > 2"),
+            column(
+              7,
+              strong("Pancreatic duct injections > 2"),
             ),
             div(
               style = "display:inline-block",
@@ -257,22 +267,24 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Pancreatic sphincterotomy"),
+            column(
+              7,
+              strong("Pancreatic sphincterotomy"),
             ),
             div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "pancreatic_sphincterotomy",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
+              style = "display:inline-block",
+              switchInput(
+                inputId = "pancreatic_sphincterotomy",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
             ),
           ),
           br(),
           div(
-            column(7,
-                   strong("Pancreo biliary malignancy"),
+            column(
+              7,
+              strong("Pancreo biliary malignancy"),
             ),
             div(
               style = "display:inline-block",
@@ -285,8 +297,9 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Pneumatic dilation of intact biliary sphincter"),
+            column(
+              7,
+              strong("Pneumatic dilation of intact biliary sphincter"),
             ),
             div(
               style = "display:inline-block",
@@ -299,55 +312,57 @@ ui <- navbarPage("",
           ),
           br(),
           div(
-            column(7,
-                   strong("Precut sphincterotomy"),
+            column(
+              7,
+              strong("Precut sphincterotomy"),
+            ),
+            div(
+              style = "display:inline-block",
+              switchInput(
+                inputId = "precut_sphincterotomy",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
+            ),
           ),
-          div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "precut_sphincterotomy",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
-          ),
-        ),
           br(),
-        div(
-          column(7,
-                 strong("Sphincter of oddi dysfunction"),
-          ),
           div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "sod",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
+            column(
+              7,
+              strong("Sphincter of oddi dysfunction"),
+            ),
+            div(
+              style = "display:inline-block",
+              switchInput(
+                inputId = "sod",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
+            ),
           ),
-        ),
-        br(),
-        div(
-          column(7,
-                 strong("Trainee involvement"),
-          ),
+          br(),
           div(
-            style = "display:inline-block",
-            switchInput(
-              inputId = "trainee_involvement",
-              onLabel = "Yes",
-              offLabel = "No"
-            )
+            column(
+              7,
+              strong("Trainee involvement"),
+            ),
+            div(
+              style = "display:inline-block",
+              switchInput(
+                inputId = "trainee_involvement",
+                onLabel = "Yes",
+                offLabel = "No"
+              )
+            ),
           ),
-        ),
           br(), br(),
           actionButton("update", "Submit",
-                       class = "center",
-                       icon = icon("caret-right"),
-                       style = "color: #fff; background-color: #337ab7"
+            class = "center",
+            icon = icon("caret-right"),
+            style = "color: #fff; background-color: #337ab7"
           )
         )
       ),
-      
       column(
         7,
         h1("PEPRisC: Post-ERCP Pancreatitis Risk Calculator"),
@@ -360,12 +375,6 @@ ui <- navbarPage("",
         uiOutput("numberOutput"),
         br()
       ),
-      # column(
-      #   3,
-      #   # Votes plot
-      #   plotOutput("votesPlot") %>%
-      #     withSpinner(type = 5)
-      # ),
       column(
         7,
         # Votes plot
@@ -391,12 +400,10 @@ ui <- navbarPage("",
                                    the decision-making of physicians. The estimator was developed using data from 7,389 patients from 12 studies. The
                                    method achieved an AUC of 0.70 under 5-fold cross-validation."),
         h4("When to Use"),
-
         p("Primarily used to stratify the risk of developing acute pancreatitis in adult patients undergoing an ERCP procedure. "),
         p("Predicts prophylactic effects of 5 prophylactic interventions including: (a) aggressive IV hydration, (b) rectal NSAID, (c) pancreatic duct (PD) stent, (d) IV hydration AND NSAID, (e) PD stent AND NSAID. "),
         h4("Where to Use"),
         p("The PEPRisC tool uses a machine learning model to predict patient’s risk of post-ERCP pancreatitis using patient-specific demographic and procedural factors. "),
-        
       )
     )
   )
@@ -404,7 +411,6 @@ ui <- navbarPage("",
 
 # Define server logic required for plots
 server <- function(input, output, session) {
-  
   output$numberOutput <- renderUI({
     percent_value <- round(pep_percent() * 100, digits = 1)
     tags$div(
@@ -419,24 +425,24 @@ server <- function(input, output, session) {
           style = "font-size: 20px; margin: 0; line-height: 1; display: inline-block;",
           "Predicted risk of PEP without prophylaxis"
         )
-    )
+      )
     )
   })
-  
-  
-  
-  
-  
+
+
+
+
+
   # Show/hide the text box for "When to use"
   observeEvent(input$btn_when, {
     shinyjs::toggle("text_when")
   })
-  
+
   # Show/hide the text box for "Why to use"
   observeEvent(input$btn_why, {
     shinyjs::toggle("text_why")
   })
-  
+
   # Read in data output from pred_model.Rmd
   fit <- readRDS("data/gbm_model.rds") # Model on full dataset
   fit_sub <- readRDS("data/gbm_model_trt.rds") # Model on trt subsets
@@ -470,7 +476,7 @@ server <- function(input, output, session) {
     explanation = explanation_default
   )
   pep_percent <- reactiveVal(0)
-  
+
   observeEvent(input$update, {
     # Capture input and put in data frame
     input_dat <- data.frame(
@@ -511,7 +517,7 @@ server <- function(input, output, session) {
     message("Normalize values")
     pre_proc_values <- preProcess(train %>% select(-c("study_id", "pep", "patient_id")), method = c("center", "scale"))
     test_impute <- predict(pre_proc_values, input_dat)
-    message('PRE PROC VALUES')
+    message("PRE PROC VALUES")
 
     message("TEST IMPUTE")
 
@@ -549,9 +555,8 @@ server <- function(input, output, session) {
         therapy = trt,
         pred = pred_adj
       )
-      
     }
-        # Prediction for no treatment on full model
+    # Prediction for no treatment on full model
     test_sub <- test_impute %>% filter(therapy == "No treatment")
     test_no_trt <- tibble(
       patient_id = test_sub$patient_id,
@@ -560,7 +565,7 @@ server <- function(input, output, session) {
     )
     message("No treatment value is: ", predict(fit, newdata = test_sub, type = "prob")[, 2])
     pep_percent(predict(fit, newdata = test_sub, type = "prob")[, 2])
-    
+
     test_patient_pred <- bind_rows(bind_rows(test_patients_pred_ls), test_no_trt)
     rv$test_patient_pred <- test_patient_pred
 
@@ -800,12 +805,12 @@ server <- function(input, output, session) {
     rv$explanation <- explanation
   })
 
-  #Plot of votes for no treatment
+  # Plot of votes for no treatment
   # output$votesPlot <- renderPlot({
   #   set.seed(1) # for geom_jitter to look the same every time
   #   ref_samples <- rv$ref_samples %>% filter(therapy == "No treatment")
   #   test_patient_pred <- rv$test_patient_pred %>% filter(therapy == "No treatment")
-  # 
+  #
   #   input$update
   #   isolate(
   #     ggplot() +
@@ -862,7 +867,7 @@ server <- function(input, output, session) {
   #       )
   #   )
   # })
-  
+
 
   # Plot of votes for other treatment options
   output$votesTrtPlot <- renderPlot({
@@ -874,38 +879,38 @@ server <- function(input, output, session) {
       pull(pred)
     pep_pred_percent <- round(pep_pred_percent * 100, digits = 1)
     input$update
-    
-    
+
+
     pep_pred_percent <- pep_percent()
     if (pep_pred_percent == 0) {
-      pep_pred_percent = NULL;
+      pep_pred_percent <- NULL
     }
     isolate(
       ggplot() +
         theme_classic(base_size = 15) +
         theme(
-          axis.text.x = element_text(size = 50),  # Adjust the font size for the x-axis labels
-          axis.text.y = element_text(size = 50)   # Adjust the font size for the y-axis labels
-        ) + 
+          axis.text.x = element_text(size = 50), # Adjust the font size for the x-axis labels
+          axis.text.y = element_text(size = 50) # Adjust the font size for the y-axis labels
+        ) +
         guides(fill = guide_legend(title = NULL, override.aes = list(color = NA))) +
         geom_col(
           data = test_patient_pred,
           aes(
             x = factor(therapy, levels = therapy_level_order),
-            y = pred,  
+            y = pred,
             fill = "#56B4E9"
           ),
           width = 0.7,
           color = "black"
         ) +
-        #TODO add the red dotted line at the no treatment value
+        # TODO add the red dotted line at the no treatment value
         geom_hline(
-          yintercept = pep_pred_percent,  # Specify the y value where the line should be placed
-          color = "red",     # Set the color of the line
-          linetype = "dashed"  # Set the line type
+          yintercept = pep_pred_percent, # Specify the y value where the line should be placed
+          color = "red", # Set the color of the line
+          linetype = "dashed" # Set the line type
         ) +
         geom_label(
-          x = 1, y = 0.5,  # Adjust the position as needed
+          x = 1, y = 0.5, # Adjust the position as needed
           label = "2",
           size = 50,
           fill = "green",
@@ -921,7 +926,6 @@ server <- function(input, output, session) {
             "NSAID and PD stent"
           )
         ) +
-        
         geom_text(
           data = test_patient_pred,
           aes(
@@ -932,8 +936,7 @@ server <- function(input, output, session) {
           ),
           size = 6,
           color = "black"
-        ) + 
-        
+        ) +
         scale_y_continuous(
           limits = c(
             0, min(
@@ -993,4 +996,3 @@ server <- function(input, output, session) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
-
